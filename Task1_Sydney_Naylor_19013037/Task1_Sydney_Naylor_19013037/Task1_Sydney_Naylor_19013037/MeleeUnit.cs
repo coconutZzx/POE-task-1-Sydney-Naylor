@@ -116,69 +116,21 @@ namespace Task1_Sydney_Naylor_19013037
             get { return health; }
             set { health = value; }
         }
-        public override int Speed
-        {
-            get { return speed; }
-            set { speed = value; }
-        }
-        public override int Attack
-        {
-            get
-            {
-                return attack;
-            }
-            set
-            {
-                attack = value;
-            }
-        }
-        public override int AttackRange
-        {
-            get
-            {
-                return attackRange;
-            }
-            set
-            {
-                attackRange = value;
-            }
-        }
-        public override string Team
-        {
-            get
-            {
-                return team;
-            }
-            set
-            {
-                team = value;
-            }
-        }
-        public override char Image
-        {
-            get
-            {
-                return image;
-            }
-            set
-            {
-                image = value;
-            }
-        }
-        public override bool Attacking
-        {
-            get
-            {
-                return attacking;
-            }
-            set
-            {
-                attacking = value;
-            }
-        }
         public override int MaxHealth
         {
             get { return maxHealth; }
+        }
+        public override string Team
+        {
+            get { return team; }
+        }
+        public override char Image
+        {
+            get { return image; }
+        }
+        public override bool Destroyed
+        {
+            get { return destroyed; }
         }
     }
 }
