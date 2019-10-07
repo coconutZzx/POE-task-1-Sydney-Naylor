@@ -103,47 +103,23 @@ namespace Task1_Sydney_Naylor_19013037
 
         public override int xPos
         {
-            get
-            {
-                return xPosition;
-            }
-            set
-            {
-                xPosition = value;
-            }
+            get { return xPosition; }
+            set { xPosition = value; }
         }
         public override int yPos
         {
-            get
-            {
-                return yPosition;
-            }
-            set
-            {
-                yPosition = value;
-            }
+            get { return yPosition; }
+            set { yPosition = value; }
         }
         public override int Health
         {
-            get
-            {
-                return health;
-            }
-            set
-            {
-                health = value;
-            }
+            get { return health; }
+            set { health = value; }
         }
         public override int Speed
         {
-            get
-            {
-                return speed;
-            }
-            set
-            {
-                speed = value;
-            }
+            get { return speed; }
+            set { speed = value; }
         }
         public override int Attack
         {
@@ -202,10 +178,7 @@ namespace Task1_Sydney_Naylor_19013037
         }
         public override int MaxHealth
         {
-            get
-            {
-                return maxHealth; 
-            }
+            get { return maxHealth; }
         }
     }
 }
