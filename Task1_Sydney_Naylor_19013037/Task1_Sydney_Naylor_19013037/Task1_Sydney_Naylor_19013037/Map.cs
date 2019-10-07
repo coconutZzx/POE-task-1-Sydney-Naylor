@@ -13,101 +13,124 @@ namespace Task1_Sydney_Naylor_19013037
         //public int x = 20;
         //public int y = 20;
 
-        const int X = 20;
-        const int Y = 20;
-        public int numberUnits;
-        
-
-        private Unit[] units;
+        const int MAPSIZE = 20;
         Random random = new Random();
-        char[,] populate = new char[X, Y];  // string[,] populate = new string[20, 20];
+        int numberUnits;
+        Unit[] units;
+        string[,] map;
+        string[] teams = { "Zombies", "Survivors" };
+
+        //char[,] populate = new char[X, Y];  // string[,] populate = new string[20, 20];
 
         public Map(int numberUnits)
         {
-            this.units = new Unit[numberUnits];
+            this.numberUnits = numberUnits;
+            Reset();
+        }
+        public Unit[] Units
+        {
+            get
+            {
+                return units;
+            }
+        }
+        public Building[] Buildings
+        {
+            get
+            {
+                return buildings;
+            }
+        }
+        public int Size
+        {
+            get
+            {
+                return MAPSIZE;
+            }
         }
 
-        public void GenerateBattlefield()
+        public string GetMapDisplay()
         {
-            // array to store things
-            // for loop to generate units randomly 
-            
-            for(int i = 0; i < units.Length; i++)  // controls number of times the loop is executed, for loop will be executed as long as this condition is valid, increment 
+            string mapString = "";
+            for (int y = 0; y < MAPSIZE; y++)
             {
-                int variable = random.Next(0, 2);
-
-                // sequence of statements that will execute repeatedly 
-
-                if (variable == 0)  // random.Next(0, 2) == 0
+                for (int x = 0; x < MAPSIZE; x++)
                 {
-                    units[i] = new MeleeUnit();
+                    mapString += map[x, y];
+                }
+                mapString += "\n";
+            }
+            return mapString;
+        }
+        public void Reset()
+        {
+            map = new string[MAPSIZE, MAPSIZE];
+            units = new Unit[numberUnits];
+            buildings = new Building[numberBuildings];
+            InitializeUnits();
+            UpdateMap();
+        }
+        public void UpdateMap()
+        {
+            for (int y = 0; y < MAPSIZE; y++)
+            {
+                for (int x = 0; x < MAPSIZE; x++)
+                {
+                    map[x, y] = " . ";
+                }
+            }
+            foreach (Unit unit in units)
+            {
+                map[unit.xPos, unit.yPos] = unit.Team[0] + "/" + unit.Image;
+            }
+        }
+
+        private void InitializeUnits()
+        {
+            for (int i = 0; i < units.Length; i++)
+            {
+                int xPosition = random.Next(0, MAPSIZE);
+                int yPosition = random.Next(0, MAPSIZE);
+                int teamIndex = random.Next(0, 2);
+                int unitType = random.Next(0, 2);
+
+                while (map[xPosition, yPosition] != null)
+                {
+                    xPosition = random.Next(0, MAPSIZE);
+                    yPosition = random.Next(0, MAPSIZE);
+                }
+                if (unitType == 0)
+                {
+                    units[i] = new MeleeUnit(xPosition, yPosition, teams[teamIndex]);
                 }
                 else
                 {
-                    units[i] = new RangedUnit();
+                    units[i] = new RangedUnit(xPosition, yPosition, teams[teamIndex]);
                 }
-                units[i].xPos = random.Next(0, X);
-                units[i].yPos = random.Next(0, Y);
+                map[xPosition, yPosition] = units[i].Team[0] + "/" + units[i].Image;
             }
         }
+            //public void Update(Label lbl)  // int x, int y, Unit u
+            //{
+            //    /*populate[u.xPos, u.yPos] = ',';
+            //    u.xPos = x;
+            //    u.yPos = y;
+            //    populate[u.xPos, u.yPos] = u.Image;*/
+            //    System.Diagnostics.Debug.WriteLine("Updating...");
+            //    lbl.Text = "";
 
-        public void Populate()
-        {
-            // 2d array of string and fill it with either nothing(blank spaces) or someother place holder
-            // 2 for loops to manage x and y
-            populate = new char[X, Y];
+            //    for (int x = 0; x < X; x++)
+            //    {
+            //        for (int y = 0; y < Y; y++)
+            //        {
+            //            lbl.Text += populate[x, y];
+            //        }
+            //        lbl.Text += "\n";
+            //    }
+            //    System.Diagnostics.Debug.WriteLine("Units placed...");
 
-            for (int i = 0; i < units.Length; i++)
-            {
-                Unit unit = units[i];
-                populate[unit.xPos, unit.yPos] = unit.Image;
-            }
-
-            for (int x = 0; x < 20; x++)
-            {
-                for(int y = 0; y < 20; y++)
-                {
-                    if (populate[x, y] == '\0')
-                    {
-                        populate[x, y] = '_';
-                    }
-                }
-            }
-        }
-
-        public void Render(Label lbl)
-        {
-            lbl.Text = "";
-            for (int x = 0; x < 20; x++)
-            {
-                for (int y = 0; y < 20; y++)
-                {
-                    lbl.Text = lbl.Text + populate[x, y];
-                }
-                lbl.Text += "\n";
-            }
-        }
-        //public void Update(Label lbl)  // int x, int y, Unit u
-        //{
-        //    /*populate[u.xPos, u.yPos] = ',';
-        //    u.xPos = x;
-        //    u.yPos = y;
-        //    populate[u.xPos, u.yPos] = u.Image;*/
-        //    System.Diagnostics.Debug.WriteLine("Updating...");
-        //    lbl.Text = "";
-
-        //    for (int x = 0; x < X; x++)
-        //    {
-        //        for (int y = 0; y < Y; y++)
-        //        {
-        //            lbl.Text += populate[x, y];
-        //        }
-        //        lbl.Text += "\n";
-        //    }
-        //    System.Diagnostics.Debug.WriteLine("Units placed...");
-
-        //}
-        public string GetInfo()
+            //}
+            public string GetInfo()
         {
             string info = "";
             for (int i = 0; i < units.Length; i++)
