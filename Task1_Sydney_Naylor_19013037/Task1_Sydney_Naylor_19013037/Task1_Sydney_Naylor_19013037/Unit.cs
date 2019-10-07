@@ -19,56 +19,47 @@ namespace Task1_Sydney_Naylor_19013037
         protected int attackRange;
         protected string team;
         protected char image;
-        protected bool attacking;
+        protected bool attacking = false;
+        protected bool destroyed = false;
+
+        public static Random random = new Random();
 
         // constructor that recieves parameters for every class variable excluding maxHealth
-        public Unit(int xPos, int yPos, int Health, int Speed, int Attack, int AttackRange, string Team, char Image, bool Attacking)  
+        public Unit(int xPosition, int yPosition, int health, int speed, int attack, int attackRange, string team, char image)  
         {
-            this.xPosition = xPos;
-            this.yPosition = yPos;
-            this.health = Health;
-            this.speed = Speed;
-            this.attack = Attack;
-            this.attackRange = AttackRange;
-            this.team = Team;
-            this.image = Image;
-            this.attacking = Attacking;
+            this.xPosition = xPosition;
+            this.yPosition = yPosition;
+            this.health = health;
+            maxHealth = health;
+            this.speed = speed;
+            this.attack = attack;
+            this.attackRange = attackRange;
+            this.team = team;
+            this.image = image;
+            
         }
 
         // abstract methods within class
-        public abstract void Move();
-        public abstract void Combat();
-        public abstract bool InAttackRange();
-        public abstract double ReturnUnit();
+        public abstract void Move(Unit closestUnit);
+        public abstract void Attack(Unit otherUnit);
+        public abstract bool InAttackRange(Unit otherUnit);
+        public abstract Unit GetClosestUnit(Unit[] units);
         public abstract void Death();
-        public abstract string ToString();
+        public abstract void RunAway();
 
-
-        public abstract int xPos
+        public abstract int xPos 
         {
             get; set;
         }
-        public abstract int yPos
+        public abstract int yPos 
         {
             get; set;
         }
-        public abstract int Health
+        public abstract int Health 
         {
             get; set;
         }
-        public abstract int Speed
-        {
-            get; set;
-        }
-        public abstract int Attack
-        {
-            get; set;
-        }
-        public abstract int AttackRange
-        {
-            get; set;
-        }
-        public abstract string Team
+        public abstract string Team 
         {
             get; set;
         }
@@ -76,11 +67,11 @@ namespace Task1_Sydney_Naylor_19013037
         {
             get; set;
         }
-        public abstract bool Attacking
+        public abstract bool Destroyed 
         {
-            get; set;
+            get; 
         }
-        public abstract int MaxHealth
+        public abstract int MaxHealth 
         {
             get;
         }
