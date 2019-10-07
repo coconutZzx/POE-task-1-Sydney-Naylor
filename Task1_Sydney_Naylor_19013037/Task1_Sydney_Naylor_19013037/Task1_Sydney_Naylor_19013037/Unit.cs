@@ -47,6 +47,25 @@ namespace Task1_Sydney_Naylor_19013037
         public abstract void Death();
         public abstract void RunAway();
 
+        public override string ToString()
+        {
+            return ("\nPosition: " + xPosition + ", " + yPosition +
+                "\nHealth: " + health + " / " + maxHealth +
+                /*"\nMax Health: " + maxHealth +*/
+                "\nSpeed: " + speed +
+                 /*"\nAttack: " + attack + 
+                  * "\nAttack Range: " + attackRange +*/
+                 "\nTeam: " + team +
+                 "\nImage: " + image + "\n"); 
+                 /*+ "\nAttacking: " + attack*/
+        }
+        public double GetDistance(Unit otherUnit)
+        {
+            double xDistance = otherUnit.xPos - xPos;
+            double yDistance = otherUnit.yPos - yPos;
+            return Math.Sqrt(xDistance * xDistance + yDistance * yDistance);
+        }
+
         public abstract int xPos 
         {
             get; set;
@@ -61,11 +80,11 @@ namespace Task1_Sydney_Naylor_19013037
         }
         public abstract string Team 
         {
-            get; set;
+            get; 
         }
         public abstract char Image
         {
-            get; set;
+            get;
         }
         public abstract bool Destroyed 
         {
