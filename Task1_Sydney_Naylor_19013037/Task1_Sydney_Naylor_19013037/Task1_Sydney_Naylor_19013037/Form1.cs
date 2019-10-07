@@ -58,38 +58,18 @@ namespace Task1_Sydney_Naylor_19013037
             }
         }
 
-        private void BtnStartPause_Click(object sender, EventArgs e)
+        private void BtnStart_Click(object sender, EventArgs e)
         {
+            map.Populate();
+            map.Render(lblArea);
 
-            if (gameState == GameState.RUNNING)
-            {
-                timer.Stop();
-                gameState = GameState.PAUSED;
-                btnStartPause.Text = "Start";
-            }
-            else
-            {
-                if (gameState == GameState.ENDED)
-                {
-                    engine.Reset();
-                }
-                timer.Start();
-                gameState = GameState.RUNNING;
-                btnStartPause.Text = "Pause";
-            }
-
-            // Populate();
-            // map.Render(lblArea);
+            
             // map.GenerateBattlefield();
             // map.Populate();
             // map.Update();
             // map.Information(txtBox);
         }
-        private void BtnSave_Click(object sender, EventArgs e)
-        {
-            engine.SaveUnitsToFile();
-            engine.SaveBuidlingsToFile();
-        }
+
         private void TxtBox_TextChanged(object sender, EventArgs e)
         {
 
