@@ -8,33 +8,64 @@ namespace Task1_Sydney_Naylor_19013037
 {
     class RangedUnit : Unit  // inherits from unit
     {
-        public RangedUnit() : base(0, 0, 100, 2, 10, 5, "Ranged", 'R', false)
+        public RangedUnit(int xPosition, int yPosition, string team) : base(xPosition, yPosition, 100, 2, 15, 2, "Survivors", 'S')
         {
 
         }
-        public override void Move()
+        public override void Move(Unit closestUnit)
         {
-            this.xPos++;
-            this.yPos++;
-        }
-        public override void Combat()
-        {
+            attacking = false;
+            int xDirection = closestUnit.xPos - xPos;
+            int yDirection = closestUnit.yPos - yPos;
 
+            if (Math.Abs(xDirection) > Math.Abs(yDirection))
+            {
+                xPosition += Math.Sign(xDirection);
+            }
+            else
+            {
+                yPosition += Math.Sign(yDirection);
+            }
+        }
+        public override void Attack(Unit otherUnit)
+        {
+            attacking = false;
+            otherUnit.Health -= attack;
+
+            if (otherUnit.Health <= 0)
+            {
+                otherUnit.Death();
+            }
         }
         public override void Death()
         {
-            if (health == 0)
+            destroyed = true;
+            attacking = false;
+            image = 'X';
+        }
+        public override bool InAttackRange(Unit otherUnit)
+        {
+            return GetDistance(otherUnit) <= attackRange;
+        }
+        public override Unit GetClosestUnit(Unit[] units)
+        {
+            double closestDistance = int.MaxValue;
+            Unit closestUnit = null;
+
+            foreach (Unit otherUnit in units)
             {
-                
+                if (otherUnit == this || otherUnit.Team == team || otherUnit.Destroyed)
+                {
+                    continue;
+                }
+                double distance = GetDistance(otherUnit);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestUnit = otherUnit;
+                }
             }
-        }
-        public override bool InAttackRange()
-        {
-            return false;
-        }
-        public override double ReturnUnit()
-        {
-            return (0.0);
+            return closestUnit;
         }
         public override string ToString()
         {
