@@ -67,20 +67,28 @@ namespace Task1_Sydney_Naylor_19013037
             }
             return closestUnit;
         }
-        public override string ToString()
+        public override void RunAway()
         {
-            return ("Position: " + xPosition + ", " + yPosition + 
-                "\nHealth: " + health + 
-                /*"\nMax Health: " + maxHealth +*/ 
-                "\nSpeed: " + speed + 
-                /*"\nAttack: " + attack + 
-                 * "\nAttack Range: " + attackRange +*/ 
-                 "\nTeam: " + team + 
-                 "\nImage: " + image 
-                 /*+ "\nAttacking: " + attack*/);
+            attacking = false;
+            int direction = random.Next(0, 4);
+            if (direction == 0)
+            {
+                xPosition += 1;
+            }
+            else if (direction == 1)
+            {
+                xPosition -= 1;
+            }
+            else if (direction == 2)
+            {
+                yPosition += 1;
+            }
+            else
+            {
+                yPosition -= 1;
+            }
         }
-
-
+        
         public override int xPos
         {
             get
