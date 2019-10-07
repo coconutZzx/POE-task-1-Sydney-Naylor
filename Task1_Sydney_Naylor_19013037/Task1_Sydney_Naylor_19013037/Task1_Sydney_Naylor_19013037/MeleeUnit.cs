@@ -67,6 +67,27 @@ namespace Task1_Sydney_Naylor_19013037
             }
             return closestUnit;
         }
+        public override void RunAway()
+        {
+            attacking = false;
+            int direction = random.Next(0, 4);
+            if (direction == 0)
+            {
+                xPosition += 1;
+            }
+            else if (direction == 1)
+            {
+                xPosition -= 1;
+            }
+            else if (direction == 2)
+            {
+                yPosition += 1;
+            }
+            else
+            {
+                yPosition -= 1;
+            }
+        }
         //public override string ToString()
         //{
         //    return ("Position: " + xPosition + ", " + yPosition + 
