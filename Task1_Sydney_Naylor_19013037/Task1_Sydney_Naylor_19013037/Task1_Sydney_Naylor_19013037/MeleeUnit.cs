@@ -8,44 +8,77 @@ namespace Task1_Sydney_Naylor_19013037
 {
     class MeleeUnit : Unit   // inherits from unit
     {
-        public MeleeUnit() : base(0, 0, 150, 1, 20, 1, "Melee", 'M' , false)
+        public MeleeUnit(int xPosition, int yPosition, string team) : base(xPosition, yPosition, 200, 1, 50, 1, "Zombies", 'Z')
         {
 
         }
-        public override void Move()
+        public override void Move(Unit closestUnit)
         {
-            this.xPos++;
-            this.yPos++;
+            attacking = false;
+            int xDirection = closestUnit.xPos - xPos;
+            int yDirection = closestUnit.yPos - yPos;
+
+            if (Math.Abs(xDirection) > Math.Abs(yDirection))
+            {
+                xPosition += Math.Sign(xDirection);
+            }
+            else
+            {
+                yPosition += Math.Sign(yDirection);
+            }
         }
-        public override void Combat()
+        public override void Attack(Unit otherUnit)
         {
-           
+            attacking = false;
+            otherUnit.Health -= attack;
+
+            if (otherUnit.Health <= 0)
+            {
+                otherUnit.Death();
+            }
         }
         public override void Death()
         {
-            
+            destroyed = true;
+            attacking = false;
+            image = 'X';
         }
-        public override bool InAttackRange()
+        public override bool InAttackRange(Unit otherUnit)
         {
-            return false;
+            return GetDistance(otherUnit) <= attackRange;
         }
-        public override double ReturnUnit()
+        public override Unit GetClosestUnit(Unit[] units)
         {
-            return (0.0);
-        }
-        public override string ToString()
-        {
-            return ("Position: " + xPosition + ", " + yPosition + 
-                "\nHealth: " + health + 
-                /*"\nMax Health: " + maxHealth +*/ 
-                "\nSpeed: " + speed + 
-                /* "\nAttack: " + attack + 
-                 * "\nAttack Range: " + attackRange +*/ 
-                 "\nTeam: " + team + 
-                 "\nImage: " + image /*+ 
-                 "\nAttacking: " + attack*/);
-        }
+            double closestDistance = int.MaxValue;
+            Unit closestUnit = null;
 
+            foreach (Unit otherUnit in units)
+            {
+                if (otherUnit == this || otherUnit.Team == team || otherUnit.Destroyed)
+                {
+                    continue;
+                }
+                double distance = GetDistance(otherUnit);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestUnit = otherUnit;
+                }
+            }
+            return closestUnit;
+        }
+        //public override string ToString()
+        //{
+        //    return ("Position: " + xPosition + ", " + yPosition + 
+        //        "\nHealth: " + health + 
+        //        /*"\nMax Health: " + maxHealth +*/ 
+        //        "\nSpeed: " + speed + 
+        //        /* "\nAttack: " + attack + 
+        //         * "\nAttack Range: " + attackRange +*/ 
+        //         "\nTeam: " + team + 
+        //         "\nImage: " + image /*+ 
+        //         "\nAttacking: " + attack*/);
+        //}
 
         public override int xPos
         {
